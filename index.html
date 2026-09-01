@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>每日工作流程</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;
+  background:#f6efe5;
+  color:#211d19;
+}
+
+.app{
+  max-width:650px;
+  margin:auto;
+  padding:24px 16px 100px;
+}
+
+.header{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:24px;
+}
+
+.logo{
+  width:62px;
+  height:62px;
+  border-radius:18px;
+  background:#b9e5ec;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+}
+
+.small-title{
+  font-size:14px;
+  color:#746b63;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+
+h1{
+  margin:4px 0 0;
+  font-size:31px;
+}
+
+.summary{
+  background:#211b17;
+  color:white;
+  padding:24px;
+  border-radius:28px;
+  box-shadow:0 12px 30px rgba(0,0,0,.15);
+}
+
+.summary-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.date{
+  font-size:19px;
+  font-weight:bold;
+}
+
+.label{
+  margin-top:20px;
+  color:#cfc5bc;
+  font-weight:bold;
+}
+
+.name{
+  width:100%;
+  margin-top:8px;
+  padding:9px 0;
+  border:none;
+  border-bottom:1px solid #766d66;
+  outline:none;
+  background:transparent;
+  color:white;
+  font-size:21px;
+}
+
+.circle{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  background:#504842;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+.circle-inner{
+  width:92px;
+  height:92px;
+  border-radius:50%;
+  background:#211b17;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.percent{
+  font-size:29px;
+  font-weight:bold;
+}
+
+.count{
+  color:#bbb0a7;
+  margin-top:5px;
+}
+
+.progress{
+  width:100%;
+  height:7px;
+  background:#514943;
+  margin-top:22px;
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.progress-bar{
+  height:100%;
+  background:white;
+  width:0%;
+}
+
+.next{
+  margin-top:18px;
+  color:#d8cec6;
+}
+
+.top-area{
+  margin-top:28px;
+}
+
+.english{
+  color:#776d64;
+  font-weight:bold;
+  letter-spacing:2px;
+  font-size:13px;
+}
+
+.title-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.title-row h2{
+  font-size:28px;
+  margin:7px 0;
+}
+
+.reset{
+  border:1px solid #cfc4b8;
+  background:#fffaf4;
+  padding:10px 13px;
+  border-radius:14px;
+}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  margin:18px 0;
+}
+
+.tab{
+  flex:1;
+  border:1px solid #d2c6bb;
+  background:white;
+  padding:12px 5px;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.tab.active{
+  background:#211b17;
+  color:white;
+}
+
+.section{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:20px 5px 10px;
+  color:#756b62;
+  font-weight:bold;
+}
+
+.section::after{
+  content:"";
+  height:1px;
+  background:#d5c9bd;
+  flex:1;
+}
+
+.task{
+  background:#fffdf8;
+  border:1px solid #e2d7cc;
+  border-radius:22px;
+  padding:18px 14px;
+  margin:11px 0;
+  display:grid;
+  grid-template-columns:45px 1fr 46px;
+  gap:8px;
+  align-items:center;
+}
+
+.task.current{
+  border:2px solid #b79a55;
+}
+
+.num{
+  color:#91867b;
+  font-weight:bold;
+}
+
+.task-name{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.note{
+  color:#8a8077;
+  margin-top:5px;
+}
+
+.check{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  border:3px solid #c5bbb1;
+  background:white;
+  font-size:24px;
+}
+
+.task.done{
+  opacity:.5;
+}
+
+.task.done .task-name{
+  text-decoration:line-through;
+}
+
+.task.done .check{
+  background:#315f4b;
+  border-color:#315f4b;
+  color:white;
+}
+
+.tools{
+  grid-column:2/4;
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:7px;
+}
+
+.mini{
+  background:white;
+  border:1px solid #d8cec4;
+  border-radius:10px;
+  padding:7px 10px;
+}
+
+.add{
+  position:fixed;
+  right:20px;
+  bottom:25px;
+  width:62px;
+  height:62px;
+  border-radius:20px;
+  background:#211b17;
+  color:white;
+  border:none;
+  font-size:32px;
+  box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  align-items:flex-end;
+  z-index:10;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.sheet{
+  width:100%;
+  max-width:650px;
+  margin:auto;
+  background:#fffaf5;
+  border-radius:25px 25px 0 0;
+  padding:20px;
+}
+
+.sheet h3{
+  font-size:24px;
+  margin-top:0;
+}
+
+.field{
+  margin:14px 0;
+}
+
+.field label{
+  display:block;
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.field input,
+.field textarea,
+.field select{
+  width:100%;
+  padding:13px;
+  border:1px solid #d5cac0;
+  border-radius:12px;
+  font-size:17px;
+  background:white;
+}
+
+.field textarea{
+  min-height:90px;
+}
+
+.modal-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:16px;
+}
+
+.modal-buttons button{
+  flex:1;
+  padding:13px;
+  border-radius:13px;
+  border:1px solid #d0c5ba;
+  font-weight:bold;
+}
+
+.save{
+  background:#211b17;
+  color:white;
+}
+
+.empty{
+  text-align:center;
+  padding:40px 15px;
+  color:#897f76;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="header">
+    <div class="logo">🐷</div>
+    <div>
+      <div class="small-title">工作流程小幫手</div>
+      <h1>每日工作流程</h1>
+    </div>
+  </div>
+
+  <div class="summary">
+
+    <div class="summary-top">
+
+      <div style="flex:1">
+        <div class="date" id="date"></div>
+
+        <div class="label">執行人</div>
+
+        <input
+          id="person"
+          class="name"
+          placeholder="輸入姓名"
+        >
+      </div>
+
+      <div class="circle">
+        <div class="circle-inner">
+          <div class="percent" id="percent">0%</div>
+          <div class="count" id="count">0 / 0</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="next" id="next">
+      下一項：—
+    </div>
+
+  </div>
+
+  <div class="top-area">
+
+    <div class="english" id="itemCount">
+      TODAY'S SOP
+    </div>
+
+    <div class="title-row">
+      <h2>照順序完成</h2>
+
+      <button class="reset" onclick="resetChecks()">
+        重設勾選
+      </button>
+    </div>
+
+  </div>
+
+  <div class="tabs">
+
+    <button class="tab active" onclick="changeTab('daily',this)">
+      每日
+    </button>
+
+    <button class="tab" onclick="changeTab('weekly',this)">
+      每週
+    </button>
+
+    <button class="tab" onclick="changeTab('monthly',this)">
+      每月
+    </button>
+
+  </div>
+
+  <div class="section">
+    工作項目
+  </div>
+
+  <div id="taskList"></div>
+
+</div>
+
+<button class="add" onclick="openAdd()">
+  ＋
+</button>
+
+
+<div class="modal" id="modal">
+
+  <div class="sheet">
+
+    <h3 id="modalTitle">新增工作</h3>
+
+    <div class="field">
+      <label>工作名稱</label>
+      <input id="taskName">
+    </div>
+
+    <div class="field">
+      <label>備註</label>
+      <textarea id="taskNote"></textarea>
+    </div>
+
+    <div class="field">
+
+      <label>放在哪裡</label>
+
+      <select id="taskType">
+        <option value="daily">每日</option>
+        <option value="weekly">每週</option>
+        <option value="monthly">每月</option>
+      </select>
+
+    </div>
+
+    <div class="modal-buttons">
+
+      <button onclick="closeModal()">
+        取消
+      </button>
+
+      <button class="save" onclick="saveTask()">
+        儲存
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const defaultData = {
+
+daily:[
+{
+name:"上班打卡",
+note:"刷點 APP",
+done:false
+},
+{
+name:"檢查凍庫電源",
+note:"",
+done:false
+},
+{
+name:"查看今日大車到貨擺放位子",
+note:"左邊全空（除週二）",
+done:false
+},
+{
+name:"拿司機出貨本上樓",
+note:"",
+done:false
+}
+],
+
+weekly:[
+{
+name:"每週工作盤點",
+note:"確認本週未完成事項",
+done:false
+},
+{
+name:"整理文件與資料",
+note:"",
+done:false
+}
+],
+
+monthly:[
+{
+name:"每月工作紀錄整理",
+note:"整理本月完成事項",
+done:false
+},
+{
+name:"下月工作預排",
+note:"",
+done:false
+}
+]
+
+};
+
+
+let data;
+
+try{
+
+data =
+JSON.parse(
+localStorage.getItem("workflowData")
+) || defaultData;
+
+}catch(e){
+
+data = defaultData;
+
+}
+
+let current = "daily";
+
+let editIndex = null;
+
+
+function save(){
+
+localStorage.setItem(
+"workflowData",
+JSON.stringify(data)
+);
+
+}
+
+
+function showDate(){
+
+const d = new Date();
+
+const week =
+["日","一","二","三","四","五","六"];
+
+document.getElementById("date").innerText =
+(d.getMonth()+1)
++"月"
++d.getDate()
++"日 週"
++week[d.getDay()];
+
+}
+
+
+function render(){
+
+const list =
+document.getElementById("taskList");
+
+const arr =
+data[current];
+
+const finished =
+arr.filter(x=>x.done).length;
+
+const total =
+arr.length;
+
+const percent =
+total
+?
+Math.round(
+finished / total * 100
+)
+:
+0;
+
+
+document.getElementById("percent").innerText =
+percent+"%";
+
+document.getElementById("count").innerText =
+finished+" / "+total;
+
+document.getElementById("progressBar").style.width =
+percent+"%";
+
+document.getElementById("itemCount").innerText =
+"WORK SOP · "+total+" ITEMS";
+
+
+const next =
+arr.find(x=>!x.done);
+
+document.getElementById("next").innerText =
+"下一項："
++
+(
+next
+?
+next.name
+:
+"全部完成 🎉"
+);
+
+
+if(total===0){
+
+list.innerHTML =
+'<div class="empty">目前沒有工作，按右下角＋新增。</div>';
+
+return;
+
+}
+
+
+const firstOpen =
+arr.findIndex(x=>!x.done);
+
+
+list.innerHTML =
+arr.map((item,i)=>{
+
+return `
+
+<div class="task
+${item.done?"done":""}
+${i===firstOpen?"current":""}
+">
+
+<div class="num">
+${String(i+1).padStart(2,"0")}
+</div>
+
+<div>
+
+<div class="task-name">
+${item.name}
+</div>
+
+<div class="note">
+${item.note || ""}
+</div>
+
+</div>
+
+<button
+class="check"
+onclick="toggleTask(${i})"
+>
+${item.done?"✓":""}
+</button>
+
+<div class="tools">
+
+<button
+class="mini"
+onclick="editTask(${i})"
+>
+編輯
+</button>
+
+<button
+class="mini"
+onclick="moveTask(${i},-1)"
+>
+↑
+</button>
+
+<button
+class="mini"
+onclick="moveTask(${i},1)"
+>
+↓
+</button>
+
+<button
+class="mini"
+onclick="deleteTask(${i})"
+>
+刪除
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+function toggleTask(i){
+
+data[current][i].done =
+!data[current][i].done;
+
+save();
+
+render();
+
+}
+
+
+function resetChecks(){
+
+if(
+confirm("要把目前的完成勾選全部清除嗎？")
+){
+
+data[current].forEach(
+x=>x.done=false
+);
+
+save();
+
+render();
+
+}
+
+}
+
+
+function changeTab(type,button){
+
+current = type;
+
+document
+.querySelectorAll(".tab")
+.forEach(
+x=>x.classList.remove("active")
+);
+
+button.classList.add("active");
+
+render();
+
+}
+
+
+function openAdd(){
+
+editIndex = null;
+
+document.getElementById("modalTitle").innerText =
+"新增工作";
+
+document.getElementById("taskName").value =
+"";
+
+document.getElementById("taskNote").value =
+"";
+
+document.getElementById("taskType").value =
+current;
+
+document.getElementById("modal").classList.add("show");
+
+}
+
+
+function closeModal(){
+
+document.getElementById("modal").classList.remove("show");
+
+}
+
+
+function editTask(i){
+
+editIndex = i;
+
+const item =
+data[current][i];
+
+document.getElementById("modalTitle").innerText =
+"編輯工作";
+
+document.getElementById("taskName").value =
+item.name;
+
+document.getElementById("taskNote").value =
+item.note;
+
+document.getElementById("taskType").value =
+current;
+
+document.getElementById("modal").classList.add("show");
+
+}
+
+
+function saveTask(){
+
+const name =
+document.getElementById("taskName")
+.value.trim();
+
+const note =
+document.getElementById("taskNote")
+.value.trim();
+
+const type =
+document.getElementById("taskType")
+.value;
+
+
+if(!name){
+
+alert("請輸入工作名稱");
+
+return;
+
+}
+
+
+if(editIndex===null){
+
+data[type].push({
+
+name:name,
+note:note,
+done:false
+
+});
+
+}else{
+
+const old =
+data[current][editIndex];
+
+if(type===current){
+
+data[current][editIndex] = {
+
+...old,
+name:name,
+note:note
+
+};
+
+}else{
+
+data[current].splice(
+editIndex,
+1
+);
+
+data[type].push({
+
+...old,
+name:name,
+note:note
+
+});
+
+}
+
+current = type;
+
+}
+
+
+save();
+
+closeModal();
+
+render();
+
+}
+
+
+function deleteTask(i){
+
+if(
+confirm("確定刪除這個工作嗎？")
+){
+
+data[current].splice(i,1);
+
+save();
+
+render();
+
+}
+
+}
+
+
+function moveTask(i,direction){
+
+const arr =
+data[current];
+
+const newIndex =
+i + direction;
+
+if(
+newIndex < 0
+||
+newIndex >= arr.length
+){
+
+return;
+
+}
+
+[
+arr[i],
+arr[newIndex]
+]
+=
+[
+arr[newIndex],
+arr[i]
+];
+
+save();
+
+render();
+
+}
+
+
+const person =
+document.getElementById("person");
+
+person.value =
+localStorage.getItem("personName")
+|| "";
+
+person.addEventListener(
+"input",
+function(){
+
+localStorage.setItem(
+"personName",
+this.value
+);
+
+}
+);
+
+
+showDate();
+
+render();
+
+</script>
+
+</body>
+</html>
